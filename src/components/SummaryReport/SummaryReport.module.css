@@ -1,0 +1,101 @@
+.container {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.container h2 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.statBlock {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 130px;
+}
+
+.grindBlock { border-left: 4px solid #dc3545; }
+.fillBlock { border-left: 4px solid #0d6efd; }
+.okBlock { border-left: 4px solid #28a745; }
+
+.statIcon {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.grindBlock .statIcon { color: #dc3545; }
+.fillBlock .statIcon { color: #0d6efd; }
+.okBlock .statIcon { color: #28a745; }
+
+.statValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.statArea {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.statMax {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.warning {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  color: #856404;
+  font-size: 14px;
+}
+
+.success {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #d1e7dd;
+  border: 1px solid #0f5132;
+  border-radius: 6px;
+  color: #0f5132;
+  font-size: 14px;
+}
+
+.zoneSummary {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.zoneTag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #444;
+}

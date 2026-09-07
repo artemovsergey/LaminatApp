@@ -1,0 +1,217 @@
+.container {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.container h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.container h3 {
+  margin: 12px 0 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.dirButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.dirBtn {
+  padding: 6px 14px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dirBtn:hover {
+  border-color: #4a90d9;
+}
+
+.dirActive {
+  background: #4a90d9;
+  border-color: #4a90d9;
+  color: #fff;
+}
+
+.playControls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.playBtn {
+  padding: 6px 14px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.playBtn:hover {
+  background: #218838;
+}
+
+.stepBtn {
+  padding: 6px 10px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.stepBtn:hover {
+  background: #d0d0d0;
+}
+
+.speedSelect {
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.posLabel {
+  font-size: 12px;
+  color: #888;
+  font-family: monospace;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.stat {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.statPass {
+  color: #28a745;
+}
+
+.statFail {
+  color: #dc3545;
+}
+
+.scrollContainer {
+  overflow-x: auto;
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.heatmapContainer {
+  position: relative;
+  background: #e8e8e8;
+}
+
+.cell {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.cellOnLine {
+  background: rgba(255, 255, 200, 0.5);
+  border: 1px solid rgba(200, 200, 0, 0.4);
+}
+
+.lineSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.resultBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.resultPass {
+  background: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.resultFail {
+  background: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+}
+
+.resultIcon {
+  font-size: 18px;
+}
+
+.resultDetail {
+  font-weight: 400;
+  color: #666;
+}
+
+.resultAction {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.failList {
+  margin-top: 12px;
+}
+
+.failGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.failItem {
+  padding: 4px 10px;
+  background: #fff;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  transition: background 0.1s;
+}
+
+.failItem:hover {
+  background: #f8d7da;
+}
+
+.failDiff {
+  color: #dc3545;
+  font-weight: 700;
+}
