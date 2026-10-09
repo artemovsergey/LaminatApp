@@ -1,0 +1,345 @@
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #f1f3f5;
+}
+
+.planToolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid #d9e0e6;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: #fff;
+}
+
+.modeButton {
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 6px 10px;
+  background: #f8fafc;
+  color: #334155;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.modeButtonActive {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.heatLegend {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  color: #52616c;
+  font-size: 11px;
+}
+
+.heatLegend i {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(39, 52, 63, 0.35);
+  border-radius: 2px;
+}
+
+.grindSwatch {
+  background: #f29a8e;
+}
+
+.fillSwatch {
+  background: #83c6ed;
+}
+
+.levelSwatch {
+  background: #dce8d3;
+}
+
+.nodeSwatch {
+  border-radius: 50% !important;
+  background: #34434f;
+}
+
+.centerSwatch {
+  border-radius: 50% !important;
+  background: #fff;
+  box-shadow: inset 0 0 0 2px #34434f;
+}
+
+.sheet {
+  min-width: 620px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(10px, 2.5vw, 28px);
+  background-color: #fff;
+  background-image:
+    linear-gradient(rgba(50, 73, 91, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 73, 91, 0.025) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: 0 2px 12px rgba(31, 41, 55, 0.09);
+}
+
+.drawing {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: #1f2933;
+  font-family: Arial, Helvetica, sans-serif;
+  shape-rendering: geometricPrecision;
+}
+
+.paper {
+  fill: rgba(255, 255, 255, 0.96);
+}
+
+.border {
+  fill: none;
+  stroke: #9aa5af;
+  stroke-width: 0.025;
+}
+
+.floorFill rect {
+  fill: #fff;
+  stroke: none;
+}
+
+.floorFill rect:nth-child(3) {
+  fill: #f8fafb;
+}
+
+.gridCell {
+  stroke: #9aa5ac;
+  stroke-width: 0.025;
+}
+
+.measurementHeatmap .gridCell {
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 0.025;
+}
+
+.selectedRoom {
+  fill: rgba(37, 99, 235, 0.08);
+  stroke: #2563eb;
+  stroke-width: 0.045;
+  stroke-dasharray: 0.12 0.08;
+  pointer-events: none;
+}
+
+.nodeMeasurement {
+  fill: #34434f;
+  stroke: #fff;
+  stroke-width: 0.018;
+}
+
+.centerMeasurement {
+  fill: #fff;
+  stroke: #34434f;
+  stroke-width: 0.018;
+}
+
+.measurementLabel {
+  fill: #17212b;
+  stroke: #fff;
+  stroke-width: 0.06px;
+  paint-order: stroke;
+  font-size: 0.105px;
+  font-weight: 700;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.doorwayProjection rect {
+  fill: url(#doorwayProjection);
+  stroke: #78848d;
+  stroke-width: 0.025;
+  stroke-dasharray: 0.1 0.06;
+}
+
+.doorwayProjection text {
+  fill: #65727b;
+  stroke: #fff;
+  stroke-width: 0.12;
+  paint-order: stroke;
+  font-size: 0.12px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.stairs rect {
+  stroke: none;
+}
+
+.stairs rect:first-child {
+  fill: url(#stairTreads);
+}
+
+.stairs text,
+.wc text {
+  fill: #46515b;
+  font-size: 0.17px;
+  font-weight: 700;
+  letter-spacing: 0.025px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.wc rect {
+  fill: url(#wcHatch);
+  stroke: none;
+}
+
+.wc .unknownSize {
+  font-size: 0.105px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.outerWall,
+.partition {
+  fill: none;
+  stroke: #202a33;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
+}
+
+.outerWall {
+  stroke-width: 8px;
+}
+
+.partition {
+  stroke-width: 5px;
+}
+
+.window {
+  fill: #fff;
+  stroke: #455967;
+  stroke-width: 0.025;
+}
+
+.window line:first-child {
+  stroke: #7295a8;
+  stroke-width: 0.04;
+}
+
+.door {
+  fill: none;
+  stroke: #45515b;
+  stroke-width: 0.035;
+  stroke-linecap: round;
+}
+
+.arch {
+  fill: none;
+  stroke: #657986;
+  stroke-width: 0.035;
+}
+
+.arch text {
+  fill: #53636e;
+  stroke: #fff;
+  stroke-width: 0.09px;
+  paint-order: stroke;
+  font-size: 0.15px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  letter-spacing: 0.02px;
+}
+
+.roomLabel {
+  fill: #24313b;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.roomName {
+  font-size: 0.22px;
+  font-weight: 700;
+  letter-spacing: 0.015px;
+}
+
+.roomDimensions {
+  fill: #52616c;
+  font-size: 0.19px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.dimension line,
+.dimensions > line,
+.scaleBar line {
+  fill: none;
+  stroke: #64727d;
+  stroke-width: 0.016px;
+  vector-effect: non-scaling-stroke;
+}
+
+.dimension marker path {
+  fill: none;
+  stroke: #64727d;
+  stroke-width: 0.016px;
+}
+
+.dimension text {
+  fill: #34434f;
+  stroke: #fff;
+  stroke-width: 0.1px;
+  paint-order: stroke;
+  font-size: 0.19px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.corridorDimensions rect {
+  fill: #fff;
+  stroke: #75838d;
+  stroke-width: 0.018px;
+}
+
+.corridorDimensions text {
+  fill: #33424d;
+  font-size: 0.14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.scaleBar line {
+  stroke: #26343e;
+  stroke-width: 0.025px;
+}
+
+.scaleBar text {
+  fill: #34434f;
+  font-size: 0.13px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.scaleBar text:first-child {
+  font-size: 0.12px;
+  font-weight: 700;
+  letter-spacing: 0.012px;
+}
+
+.note text {
+  fill: #586671;
+  font-size: 0.13px;
+  dominant-baseline: middle;
+}
+
+@media (max-width: 640px) {
+  .sheet {
+    min-width: 620px;
+  }
+}

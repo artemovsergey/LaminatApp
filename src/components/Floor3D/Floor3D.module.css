@@ -1,0 +1,168 @@
+.wrapper {
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  min-height: 38px;
+  padding: 7px 14px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:hover {
+  border-color: #4a90d9;
+  color: #2c6cb0;
+}
+
+.sliderLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+.slider {
+  width: 160px;
+  accent-color: #4a90d9;
+}
+
+.hint {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+  margin-left: auto;
+}
+
+.targetValue {
+  color: #075985;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.canvas {
+  display: block;
+  border-radius: 10px;
+  border: 1px solid #d7dde5;
+  cursor: grab;
+  touch-action: none;
+  max-width: 100%;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.legendText {
+  font-size: 12px;
+  color: #555;
+}
+
+.legendBar {
+  width: 180px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background: linear-gradient(to right, #2556d6, #eeeeee, #d62828);
+}
+
+.legendNote {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.legendItem i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  border-radius: 3px;
+}
+
+.grindSwatch {
+  background: #df5c50;
+}
+
+.fillSwatch {
+  background: #4990cc;
+}
+
+.okSwatch {
+  background: #70aa80;
+}
+
+.targetSwatch {
+  background: rgba(31, 138, 180, 0.3);
+  border-color: #13789a !important;
+}
+
+@media (max-width: 640px) {
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .sliderLabel {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  .slider {
+    width: 100%;
+    min-height: 30px;
+  }
+
+  .targetValue,
+  .hint {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .legend {
+    gap: 8px 12px;
+  }
+
+  .legendNote {
+    flex-basis: 100%;
+  }
+}

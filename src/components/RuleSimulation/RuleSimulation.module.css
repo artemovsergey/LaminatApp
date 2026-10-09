@@ -1,0 +1,200 @@
+.container {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.mode {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.playBtn,
+.stepBtn {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.playBtn {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  min-width: 86px;
+}
+
+.playBtn:hover {
+  background: #1d4ed8;
+}
+
+.stepBtn:hover {
+  border-color: #94a3b8;
+}
+
+.range {
+  width: 220px;
+  accent-color: #2563eb;
+}
+
+.angleLabel {
+  font-size: 13px;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.presets {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.presetBtn {
+  border: 1px solid #dbe2ea;
+  background: #fff;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.presetActive {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.posLabel {
+  font-size: 12px;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+.verdict {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.verdictPass {
+  background: #e8f6ee;
+  color: #15803d;
+}
+
+.verdictRock {
+  background: #fdecec;
+  color: #b91c1c;
+}
+
+.verdictGap {
+  background: #e8eefc;
+  color: #1d4ed8;
+}
+
+.summary {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.summaryValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+}
+
+.good {
+  color: #15803d;
+}
+
+.bad {
+  color: #b91c1c;
+}
+
+.summaryLabel {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.angleList {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.angleChip {
+  border: 1px solid #dbe2ea;
+  background: #fff;
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #334155;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.angleChipFail {
+  border-color: #f3c6c6;
+  background: #fff7f7;
+}
+
+.angleChipActive {
+  outline: 2px solid #2563eb;
+}
+
+.angleChipFails {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.angleChipPass .angleChipFails {
+  color: #15803d;
+}
+
+@media (max-width: 720px) {
+  .range {
+    width: 100%;
+  }
+}

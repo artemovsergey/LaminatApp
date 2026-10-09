@@ -1,0 +1,184 @@
+.panel {
+  overflow: hidden;
+}
+
+.intro,
+.note {
+  max-width: 900px;
+  color: #586671;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 10px;
+}
+
+.choice {
+  min-height: 62px;
+  padding: 9px 11px;
+  border: 1px solid #d6dce4;
+  border-radius: 8px;
+  background: #fff;
+  color: #475569;
+  text-align: left;
+  cursor: pointer;
+}
+
+.choice b,
+.choice span {
+  display: block;
+}
+
+.choice b {
+  margin-bottom: 3px;
+  color: #253241;
+  font-size: 12px;
+}
+
+.choice span {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.choiceActive {
+  border-color: #8a5737;
+  background: #fbf5ef;
+  box-shadow: inset 0 0 0 1px #8a5737;
+}
+
+.underlayToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.underlayToggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+}
+
+.layoutOptions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 16px;
+  margin: 4px 0;
+}
+
+.drawingWrap {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f5f3ef;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawing {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.roomLabel {
+  fill: #fff;
+  stroke: #35271f;
+  stroke-width: 0.04px;
+  paint-order: stroke;
+  font: 700 0.16px Arial, sans-serif;
+  pointer-events: none;
+}
+
+.doorJoints {
+  fill: #263746;
+  stroke: #f6d98d;
+  stroke-width: 0.045;
+  stroke-dasharray: 0.09 0.045;
+}
+
+.doorJoints text,
+.dimensionText text {
+  fill: #334155;
+  stroke: #fff;
+  stroke-width: 0.07px;
+  paint-order: stroke;
+  font: 600 0.14px Arial, sans-serif;
+  stroke-dasharray: none;
+}
+
+.dimensionText line {
+  stroke: #475569;
+  stroke-width: 0.02;
+}
+
+.materials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.materialCard {
+  padding: 12px 14px;
+  border: 1px solid #e0e5eb;
+  border-radius: 8px;
+  background: #fbfcfd;
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.materialCard h3 {
+  margin: 0 0 6px;
+  color: #273444;
+  font-size: 14px;
+}
+
+.materialCard p {
+  margin: 3px 0;
+}
+
+.materialCard b {
+  display: block;
+  margin-top: 8px;
+  color: #7a482f;
+}
+
+.note {
+  margin: 12px 0 0;
+  font-size: 11px;
+}
+
+@media (max-width: 680px) {
+  .choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .materials {
+    grid-template-columns: 1fr;
+  }
+
+  .drawing {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .layoutOptions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .choices {
+    grid-template-columns: 1fr;
+  }
+}
