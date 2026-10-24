@@ -1,4 +1,5 @@
 import { FloorPatch } from '../data/floorProject';
+import { fieldAxisOnDisplay, fieldToDisplay, roomOrientation, RoomOrientation } from './roomOrientation';
 
 export interface RoomPoint {
   row: number;
@@ -11,6 +12,9 @@ export interface RoomPoint {
   /** Локальные координаты точки в поле комнаты, м. */
   x: number;
   y: number;
+  /** Координаты на схеме в ориентации общего плана, м. */
+  planX: number;
+  planY: number;
   /** Короткая привязка к сетке замеров. */
   gridRef: string;
   /** Понятное описание места в комнате. */
@@ -44,9 +48,13 @@ function sourceExtent(patch: FloorPatch): { rows: number; points: number } {
   return { rows, points };
 }
 
-function describePlace(patch: FloorPatch, x: number, y: number): string {
-  const fx = patch.lengthM > 0 ? x / patch.lengthM : 0.5;
-  const fy = patch.widthM > 0 ? y / patch.widthM : 0.5;
+function describePlace(
+  orientation: RoomOrientation,
+  planX: number,
+  planY: number
+): string {
+  const fx = orientation.plotW > 0 ? planX / orientation.plotW : 0.5;
+  const fy = orientation.plotH > 0 ? planY / orientation.plotH : 0.5;
 
   const horizontal = fx < 0.3 ? 'слева' : fx > 0.7 ? 'справа' : 'по центру';
   const vertical = fy < 0.3 ? 'вверху' : fy > 0.7 ? 'внизу' : 'по центру';
@@ -59,6 +67,7 @@ function describePlace(patch: FloorPatch, x: number, y: number): string {
 
 function collectPoints(patch: FloorPatch, targetZ: number): RawPoint[] {
   const { rows, points } = sourceExtent(patch);
+  const orientation = roomOrientation(patch);
   const out: RawPoint[] = [];
 
   for (let j = 0; j < patch.measurements.length; j++) {
@@ -75,6 +84,7 @@ function collectPoints(patch: FloorPatch, targetZ: number): RawPoint[] {
 
       const x = patch.grid.fineCoordinatesX?.[i] ?? i * patch.grid.stepX;
       const y = patch.grid.fineCoordinatesY?.[j] ?? j * patch.grid.stepY;
+      const plan = fieldToDisplay(orientation, x, y);
 
       out.push({
         row,
@@ -84,8 +94,10 @@ function collectPoints(patch: FloorPatch, targetZ: number): RawPoint[] {
         delta: z - targetZ,
         x,
         y,
+        planX: plan.x,
+        planY: plan.y,
         gridRef: `ряд ${row}, точка ${point}`,
-        place: describePlace(patch, x, y),
+        place: describePlace(orientation, plan.x, plan.y),
         evenI,
         evenJ,
       });
@@ -99,7 +111,7 @@ export function roomMeasurementPoints(patch: FloorPatch, targetZ: number): RoomP
   return collectPoints(patch, targetZ).map(({ evenI: _evenI, evenJ: _evenJ, ...point }) => point);
 }
 
-/** Какая ось схемы соответствует рядам, а какая — точкам. */
+/** Какая ось схемы (в ориентации плана) соответствует рядам, а какая — точкам. */
 export function roomAxisInfo(patch: FloorPatch): {
   rowAxis: 'x' | 'y';
   pointAxis: 'x' | 'y';
@@ -107,9 +119,13 @@ export function roomAxisInfo(patch: FloorPatch): {
   points: number;
 } {
   const ext = sourceExtent(patch);
-  return patch.transposeMeasurements
-    ? { rowAxis: 'x', pointAxis: 'y', ...ext }
-    : { rowAxis: 'y', pointAxis: 'x', ...ext };
+  const rowFieldAxis: 'x' | 'y' = patch.transposeMeasurements ? 'x' : 'y';
+  const rowAxis = fieldAxisOnDisplay(roomOrientation(patch), rowFieldAxis);
+  return {
+    rowAxis,
+    pointAxis: rowAxis === 'x' ? 'y' : 'x',
+    ...ext,
+  };
 }
 
 /**

@@ -38,8 +38,6 @@ export interface FloorPatch {
   lengthM: number;
   widthM: number;
   window: 'north' | 'south' | 'east' | 'west' | null;
-  /** Сторона поля замера, у которой находится окно (для схемы комнаты). */
-  windowSide: 'x0' | 'x1' | 'y0' | 'y1' | null;
   actualAreaM2: number;
 }
 
@@ -307,7 +305,6 @@ interface PatchConfig {
   lengthM: number;
   widthM: number;
   window: FloorPatch['window'];
-  windowSide?: FloorPatch['windowSide'];
   actualAreaM2: number;
 }
 
@@ -339,7 +336,6 @@ function makePatch(cfg: PatchConfig): FloorPatch {
     lengthM: cfg.lengthM,
     widthM: cfg.widthM,
     window: cfg.window,
-    windowSide: cfg.windowSide ?? null,
     actualAreaM2: cfg.actualAreaM2,
   };
 }
@@ -360,7 +356,6 @@ export const FLOOR_PATCHES: FloorPatch[] = [
     lengthM: 5.41,
     widthM: 3.47,
     window: 'west',
-    windowSide: 'x0',
     actualAreaM2: 18.77,
   }),
   makePatch({
@@ -378,7 +373,6 @@ export const FLOOR_PATCHES: FloorPatch[] = [
     lengthM: 3.5,
     widthM: 3.47,
     window: 'east',
-    windowSide: 'x0',
     actualAreaM2: 12.14,
   }),
   makePatch({
@@ -396,7 +390,6 @@ export const FLOOR_PATCHES: FloorPatch[] = [
     lengthM: 4.87,
     widthM: 3.55,
     window: 'south',
-    windowSide: 'x1',
     actualAreaM2: 17.28,
   }),
   makePatch({
@@ -413,7 +406,6 @@ export const FLOOR_PATCHES: FloorPatch[] = [
     lengthM: 5.37,
     widthM: 5.02,
     window: 'south',
-    windowSide: 'y1',
     actualAreaM2: 26.95,
   }),
   makePatch({

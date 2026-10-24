@@ -4,6 +4,7 @@ import { FloorPatch } from '../../data/floorProject';
 import { SurfaceField } from '../../types';
 import { RoomLevelStats } from '../../utils/floorTarget';
 import { roomInsights } from '../../utils/roomInsights';
+import { windowPlanSide } from '../../utils/roomOrientation';
 import { Room2D } from './Room2D';
 import { Room3D } from './Room3D';
 
@@ -22,12 +23,14 @@ const fmt = (value: number, digits = 1): string =>
 const baseLabel = (base: FloorPatch['base']): string =>
   base === 'screed' ? 'бетонная стяжка' : 'наливной пол';
 
-const windowLabel = (side: FloorPatch['windowSide']): string | null => {
-  if (side === 'x0') return 'окно слева по схеме';
-  if (side === 'x1') return 'окно справа по схеме';
-  if (side === 'y0') return 'окно вверху по схеме';
-  if (side === 'y1') return 'окно внизу по схеме';
-  return null;
+const windowLabel = (patch: FloorPatch): string => {
+  const side = windowPlanSide(patch);
+  if (side === 'left') return 'окно слева · запад';
+  if (side === 'right') return 'окно справа · восток';
+  if (side === 'top') return 'окно вверху · север';
+  if (side === 'bottom') return 'окно внизу · юг';
+  if (patch.kind === 'corridor' || patch.kind === 'arch') return 'без окна';
+  return 'окно не указано';
 };
 
 function Stat({
@@ -94,7 +97,7 @@ export function RoomReport({
           <p className={styles.roomMeta}>
             <span>{fmt(patch.actualAreaM2, 2)} м²</span>
             <span>{baseLabel(patch.base)}</span>
-            {windowLabel(patch.windowSide) ? <span>{windowLabel(patch.windowSide)}</span> : null}
+            <span>{windowLabel(patch)}</span>
             <span>
               {patch.lengthM.toFixed(2).replace('.', ',')} × {patch.widthM.toFixed(2).replace('.', ',')} м
             </span>
@@ -134,11 +137,16 @@ export function RoomReport({
         </div>
       </div>
 
+      <p className={styles.orientationNote}>
+        Схемы ориентированы как общий план этажа: верх — север, низ — юг, лево и право совпадают с планом.
+        Наведите курсор или коснитесь точки замера, чтобы увидеть значение и координаты по схеме.
+      </p>
+
       <div className={styles.panels}>
         <section className={styles.panel}>
           <div className={styles.panelHead}>
             <h4 className={styles.panelTitle}>2D — карта отклонений</h4>
-            <span className={styles.panelHint}>сетка 50 см · точки замеров</span>
+            <span className={styles.panelHint}>сетка 50 см · наведите на точку</span>
           </div>
           <Room2D
             patch={patch}
@@ -151,7 +159,7 @@ export function RoomReport({
         <section className={styles.panel}>
           <div className={styles.panelHead}>
             <h4 className={styles.panelTitle}>3D — рельеф пола</h4>
-            <span className={styles.panelHint}>потяните, чтобы вращать</span>
+            <span className={styles.panelHint}>вращение · наведите на точку</span>
           </div>
           <Room3D
             patch={patch}
