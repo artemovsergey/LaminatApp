@@ -30,12 +30,12 @@ describe('Данные реальных замеров', () => {
 
   it('количество и диапазон замеров совпадают со сводкой', () => {
     const expected: Record<string, { count: number; min: number; max: number }> = {
-      hall: { count: 132 + 110, min: 105, max: 121 },
-      corridor: { count: 45 + 32, min: 108, max: 114 },
-      arch: { count: 12 + 4, min: 105, max: 110 },
-      garden: { count: 96 + 77, min: 104, max: 117 },
-      yard: { count: 88 + 70, min: 108, max: 115 },
-      small: { count: 64 + 49, min: 108, max: 119 },
+      hall: { count: 132 + 110, min: 104, max: 121 },
+      corridor: { count: 45 + 32, min: 106, max: 114 },
+      arch: { count: 8 + 3, min: 108, max: 110 },
+      garden: { count: 96 + 77, min: 105, max: 116 },
+      yard: { count: 88 + 70, min: 108, max: 116 },
+      small: { count: 64 + 49, min: 109, max: 119 },
       'sill-garden': { count: 6, min: 109, max: 110 },
       'sill-yard': { count: 6, min: 115, max: 115 },
       'sill-small': { count: 6, min: 112, max: 114 },

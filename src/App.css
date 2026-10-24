@@ -1,70 +1,507 @@
 .app {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  background: #eef2f7;
+  color: #0f172a;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.app-compact {
-  min-height: 100vh;
-  background: #f3f6fb;
+.app-header {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 38px 24px 18px;
+}
+
+.app-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.app-kicker {
+  margin: 0 0 10px;
+  font-family: "JetBrains Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+
+.app-header h1 {
+  max-width: 17ch;
+  margin: 0;
+  font-size: clamp(30px, 4.2vw, 52px);
+  line-height: 1.02;
+  font-weight: 780;
+  letter-spacing: -0.035em;
+  color: #0f172a;
+  text-wrap: balance;
+}
+
+.subtitle {
+  max-width: 64ch;
+  margin: 12px 0 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.app-stamp {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px 14px;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+  font-family: "JetBrains Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.app-stamp strong {
+  color: #0f172a;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
 }
 
 .app-main {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.app-main-compact {
-  min-height: 100vh;
+.level-sheet {
+  max-width: 1400px;
+  margin: 10px auto 0;
+  padding: 0 24px;
+}
+
+.level-sheet-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: end;
+  padding: 16px 0 12px;
+  border-top: 2px solid #0f172a;
+}
+
+.level-sheet-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.level-sheet-head p {
+  max-width: 64ch;
+  margin: 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  background: #cbd5e1;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+}
+
+.level-block {
+  min-width: 0;
+  padding: 20px 22px 18px;
+  background: #ffffff;
+}
+
+.level-block-apartment {
+  background: #f8fafc;
+}
+
+.level-block-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.level-block-top span:last-child {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #94a3b8;
+}
+
+.level-target {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.level-target strong {
+  font-size: clamp(48px, 6vw, 74px);
+  line-height: 0.94;
+  font-weight: 780;
+  letter-spacing: -0.055em;
+  color: #0f172a;
+}
+
+.level-target span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.level-caption {
+  margin: 3px 0 14px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.level-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 11px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.level-facts dt {
+  margin: 0;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.level-facts dd {
+  margin: 3px 0 0;
+  font-size: 14px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.level-work {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 18px;
+  margin-top: 11px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.level-work strong {
+  color: #0f172a;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.level-footnote {
+  margin: 11px 0 0;
+  color: #64748b;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px 42px;
+}
+
+.panel {
+  margin: 16px 0;
+  padding: 16px 18px 18px;
+  background: #ffffff;
+  border: 1px solid #dde5ef;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035);
 }
 
 .plan-only-panel {
   background: #ffffff;
-  border: 1px solid #e4e7eb;
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  margin: 16px;
-  padding: 14px 18px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 12px;
 }
 
 .panel-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 12px 0;
+  margin: 0 0 3px;
+  font-size: 17px;
+  font-weight: 740;
+  letter-spacing: -0.015em;
+  color: #0f172a;
+}
+
+.panel-head .section-intro {
+  margin: 0;
+  max-width: 76ch;
 }
 
 .section-intro {
   margin: -4px 0 12px;
   color: #64748b;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12.5px;
+  line-height: 1.55;
 }
 
-@media (max-width: 640px) {
+.panel-tag {
+  flex: 0 0 auto;
+  padding: 3px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  font-family: "JetBrains Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.rooms-section {
+  margin-top: 38px;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: end;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(23px, 2.7vw, 31px);
+  font-weight: 770;
+  letter-spacing: -0.028em;
+  color: #0f172a;
+  text-wrap: balance;
+}
+
+.section-head p {
+  max-width: 72ch;
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.room-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  max-width: 430px;
+}
+
+.room-nav a {
+  padding: 4px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 140ms ease-out, border-color 140ms ease-out, background-color 140ms ease-out;
+}
+
+.room-nav a:hover {
+  color: #0f766e;
+  border-color: #5eead4;
+  background: #f0fdfa;
+}
+
+.room-nav a:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 1px;
+}
+
+.apartment-section {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 2px solid #0f172a;
+}
+
+.section-head-apartment h2 {
+  color: #7c2d12;
+}
+
+.apartment-tag {
+  flex: 0 0 auto;
+  padding: 4px 9px;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.apartment-alert {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #78350f;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.apartment-alert strong {
+  color: #92400e;
+}
+
+.app-footer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 24px 34px;
+  border-top: 1px solid #d5dee9;
+}
+
+.app-footer p {
+  max-width: 90ch;
+  margin: 0;
+  color: #7c899c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+@media (max-width: 980px) {
+  .app-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .level-sheet-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .section-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .room-nav {
+    justify-content: flex-start;
+    max-width: none;
+  }
+}
+
+@media (max-width: 720px) {
   .app-header {
-    padding: 14px 12px 6px;
+    padding: 24px 12px 12px;
   }
 
   .app-header h1 {
-    font-size: clamp(20px, 6vw, 26px);
-    line-height: 1.2;
+    font-size: clamp(28px, 9vw, 40px);
   }
 
   .subtitle {
-    font-size: 12px;
-    line-height: 1.45;
+    font-size: 13px;
   }
 
-  .plan-only-panel {
-    margin: 8px;
-    padding: 10px;
-    border-radius: 10px;
+  .app-stamp {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .level-sheet {
+    padding: 0 12px;
+  }
+
+  .level-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .level-block {
+    padding: 17px 16px 15px;
+  }
+
+  .level-target strong {
+    font-size: clamp(48px, 17vw, 64px);
+  }
+
+  .level-block-top {
+    flex-wrap: wrap;
+  }
+
+  .content {
+    padding: 0 12px 32px;
+  }
+
+  .panel {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 11px;
+  }
+
+  .panel-head {
+    flex-direction: column;
+    gap: 8px;
   }
 
   .panel-title {
     font-size: 15px;
+  }
+
+  .section-head h2 {
+    font-size: 23px;
+  }
+
+  .rooms-section {
+    margin-top: 28px;
+  }
+
+  .apartment-section {
+    margin-top: 34px;
+    padding-top: 20px;
+  }
+
+  .app-footer {
+    padding: 14px 12px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-nav a {
+    transition: none;
   }
 }

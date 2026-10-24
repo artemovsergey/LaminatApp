@@ -1,0 +1,450 @@
+.roomReport {
+  margin: 22px 0 0;
+  padding: 22px clamp(16px, 2.4vw, 28px) 20px;
+  background: #ffffff;
+  border: 1px solid #dde5ef;
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.055);
+  scroll-margin-top: 24px;
+}
+
+.reportHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.roomState {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roomIndex {
+  font-family: "JetBrains Mono", "Cascadia Code", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.roomTitle {
+  margin: 0;
+  font-size: clamp(21px, 2.6vw, 30px);
+  line-height: 1.08;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+  text-wrap: balance;
+}
+
+.roomMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  color: #64748b;
+  font-size: 12.5px;
+}
+
+.roomMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.roomMeta span::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.spread {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.spreadLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.spreadValue {
+  display: block;
+  margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.spreadValue small {
+  font-size: 0.46em;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #64748b;
+  margin-left: 3px;
+}
+
+.verdict {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 18px 28px;
+  align-items: start;
+  margin: 18px 0;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.verdictText {
+  margin: 0;
+  color: #1e293b;
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 66ch;
+}
+
+.verdictText strong {
+  color: #0f172a;
+  font-weight: 650;
+}
+
+.verdictLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+}
+
+.stat {
+  min-width: 0;
+}
+
+.statLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statValue {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.statValue small {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  min-width: 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #334155;
+}
+
+.panelHint {
+  font-size: 10.5px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.canvas3d {
+  touch-action: none;
+  cursor: grab;
+  border-color: #1e293b;
+  background: #0b1220;
+}
+
+.canvas3d:active {
+  cursor: grabbing;
+}
+
+.model3d {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.viewControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.viewControls button {
+  appearance: none;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 7px;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
+}
+
+.viewControls button:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.viewControls button:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 1px;
+}
+
+.heightControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.heightControl input {
+  width: 86px;
+  accent-color: #0f766e;
+}
+
+.hotspots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 30px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e8edf4;
+}
+
+.hotspotGroup h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.groupDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.groupDotGrind {
+  background: #b91c1c;
+}
+
+.groupDotFill {
+  background: #1d4ed8;
+}
+
+.hotspotList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.hotspotItem {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 9px;
+  align-items: baseline;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.hotspotItem:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.badge {
+  justify-self: start;
+  min-width: 46px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.badgeGrind {
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.badgeFill {
+  color: #1e40af;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.hotspotText {
+  min-width: 0;
+  color: #1e293b;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.hotspotText em {
+  font-style: normal;
+  color: #64748b;
+}
+
+.hotspotRef {
+  display: block;
+  margin-top: 1px;
+  font-family: "JetBrains Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  font-size: 9.5px;
+  color: #94a3b8;
+}
+
+.empty {
+  margin: 0;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.note {
+  margin: 14px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #eef2f7;
+  color: #7c899c;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.apartmentNote {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid #fde68a;
+  background: #fffbeb;
+  border-radius: 9px;
+  color: #92400e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1080px) {
+  .panels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .verdict {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .roomReport {
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
+  .reportHeader {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .spread {
+    text-align: left;
+  }
+
+  .hotspots {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .statRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .heightControl {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewControls button {
+    transition: none;
+  }
+}

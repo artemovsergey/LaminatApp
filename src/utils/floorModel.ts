@@ -1,5 +1,7 @@
 import { MeasurementGrid, Rect, RuleArea, Shape, SurfaceField } from '../types';
 import {
+  APARTMENT_PATCHES,
+  APARTMENT_ZONES,
   FLOOR_PATCHES,
   FloorPatch,
   FloorZoneDef,
@@ -117,18 +119,19 @@ function shapeToLocal(shape: Shape, bounds: Rect): Shape {
   };
 }
 
-/** Строит и кэширует модель всего этажа: поля участков и зон симуляции. */
-export function buildFloorModel(
+function buildModel(
+  patchDefs: FloorPatch[],
+  zoneDefs: FloorZoneDef[],
   measurements: Record<string, MeasurementGrid> = {}
 ): FloorModel {
-  const patches: PatchModel[] = FLOOR_PATCHES.map(def => {
+  const patches: PatchModel[] = patchDefs.map(def => {
     const data = measurements[def.id] ?? def.measurements;
     return { def, field: buildSurface(data, def.grid) };
   });
 
   const patchMap = new Map(patches.map(p => [p.def.id, p]));
 
-  const zones: ZoneModel[] = FLOOR_ZONES.map(def => {
+  const zones: ZoneModel[] = zoneDefs.map(def => {
     const zonePatches = def.patchIds.map(id => {
       const p = patchMap.get(id);
       if (!p) throw new Error(`Неизвестный участок зоны ${def.id}: ${id}`);
@@ -156,6 +159,20 @@ export function buildFloorModel(
   }
 
   return { patches, zones, bounds: { x0, y0, x1, y1 } };
+}
+
+/** Строит и кэширует модель всего этажа: поля участков и зон симуляции. */
+export function buildFloorModel(
+  measurements: Record<string, MeasurementGrid> = {}
+): FloorModel {
+  return buildModel(FLOOR_PATCHES, FLOOR_ZONES, measurements);
+}
+
+/** Отдельная модель комнаты в квартире — не смешивается с этажом. */
+export function buildApartmentModel(
+  measurements: Record<string, MeasurementGrid> = {}
+): FloorModel {
+  return buildModel(APARTMENT_PATCHES, APARTMENT_ZONES, measurements);
 }
 
 export function patchModelById(model: FloorModel, id: string): PatchModel {
