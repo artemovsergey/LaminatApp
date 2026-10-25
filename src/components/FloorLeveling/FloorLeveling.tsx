@@ -39,20 +39,20 @@ export function FloorLeveling({
       {
         id: 'fill',
         title: 'Только подмазка',
-        target: reference.minZ,
-        result: computeFloorLevel(rooms, reference.minZ, toleranceMm),
+        target: Math.round(reference.minZ),
+        result: computeFloorLevel(rooms, Math.round(reference.minZ), toleranceMm),
       },
       {
         id: 'balanced',
         title: 'Смешанный способ',
-        target: reference.medianZ,
-        result: computeFloorLevel(rooms, reference.medianZ, toleranceMm),
+        target: Math.round(reference.medianZ),
+        result: computeFloorLevel(rooms, Math.round(reference.medianZ), toleranceMm),
       },
       {
         id: 'grind',
         title: 'Только шлифовка',
-        target: reference.maxZ,
-        result: computeFloorLevel(rooms, reference.maxZ, toleranceMm),
+        target: Math.round(reference.maxZ),
+        result: computeFloorLevel(rooms, Math.round(reference.maxZ), toleranceMm),
       },
     ],
     [rooms, reference.minZ, reference.medianZ, reference.maxZ, toleranceMm]
@@ -96,21 +96,21 @@ export function FloorLeveling({
           <div className={styles.presets}>
             <button
               className={`${styles.presetBtn} ${Math.abs(targetZ - reference.minZ) < 0.5 ? styles.presetActive : ''}`}
-              onClick={() => onTargetChange(reference.minZ)}
+              onClick={() => onTargetChange(Math.round(reference.minZ))}
               title="Целевая плоскость по самой высокой точке — только подмазка"
             >
               Только подмазка
             </button>
             <button
               className={`${styles.presetBtn} ${Math.abs(targetZ - reference.medianZ) < 0.5 ? styles.presetActive : ''}`}
-              onClick={() => onTargetChange(reference.medianZ)}
+              onClick={() => onTargetChange(Math.round(reference.medianZ))}
               title="Минимальный суммарный объём работ"
             >
               Минимум работы (медиана)
             </button>
             <button
               className={`${styles.presetBtn} ${Math.abs(targetZ - reference.maxZ) < 0.5 ? styles.presetActive : ''}`}
-              onClick={() => onTargetChange(reference.maxZ)}
+              onClick={() => onTargetChange(Math.round(reference.maxZ))}
               title="Целевая плоскость по самой низкой точке — только шлифовка"
             >
               Только шлифовка

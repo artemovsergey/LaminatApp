@@ -60,9 +60,9 @@ describe('Приложение', () => {
     await act(async () => heatmapButton?.click());
 
     const nodeTitles = Array.from(container.querySelectorAll('circle[class*="nodeMeasurement"] > title'));
-    expect(nodeTitles.some(title => title.textContent === '1.1 · 10,5 см')).toBe(true);
+    expect(nodeTitles.some(title => title.textContent === '1.1 · 11,1 см')).toBe(true);
     const centerMarkers = Array.from(container.querySelectorAll('circle[class*="centerMeasurement"]'));
-    expect(centerMarkers.some(marker => marker.querySelector('title')?.textContent === '1.1ц · 11,4 см')).toBe(true);
+    expect(centerMarkers.some(marker => marker.querySelector('title')?.textContent === '1.1ц · 11,2 см')).toBe(true);
     expect(centerMarkers.every(marker => !marker.parentElement?.querySelector('text'))).toBe(true);
     expect(container.querySelector('svg.drawing > title')).toBeNull();
 
@@ -79,49 +79,10 @@ describe('Приложение', () => {
       Number(floorRects[4].getAttribute('x')) + Number(floorRects[4].getAttribute('width')) / 2
     );
 
-    const levelingCanvas = container.querySelector('canvas[aria-label^="3D-модель пола"]');
-    expect(levelingCanvas?.getAttribute('aria-label')).toContain('Целевой уровень');
-    const walkButton = Array.from(container.querySelectorAll('button')).find(button =>
-      button.textContent?.includes('Пройти по комнатам')
-    );
-    expect(walkButton).toBeDefined();
-    await act(async () => walkButton?.click());
-    expect(Array.from(container.querySelectorAll('button')).some(button =>
-      button.textContent?.includes('Пауза прогулки')
-    )).toBe(true);
-
-    const thirdPattern = Array.from(container.querySelectorAll('button')).find(button =>
-      button.textContent?.includes('Прямая · 1/3')
-    );
-    await act(async () => thirdPattern?.click());
-    expect(thirdPattern?.getAttribute('aria-pressed')).toBe('true');
-
-    const layoutCanvas = container.querySelector<HTMLCanvasElement>(
-      'canvas[aria-label^="3D-раскладка ламината"]'
-    );
-    expect(layoutCanvas).not.toBeNull();
-    expect(layoutCanvas?.getAttribute('aria-label')).toContain('этаж перевернут');
-    const flipFloorButton = Array.from(layoutCanvas?.parentElement?.querySelectorAll('button') ?? []).find(button =>
-      button.textContent?.includes('Вернуть вид по плану')
-    );
-    expect(flipFloorButton).toBeDefined();
-    await act(async () => flipFloorButton?.click());
-    expect(layoutCanvas?.getAttribute('aria-label')).toContain('вид по плану');
-
-    const herringbone = Array.from(container.querySelectorAll('button')).find(button =>
-      button.textContent?.includes('Ёлочка')
-    );
-    await act(async () => herringbone?.click());
-    expect(herringbone?.getAttribute('aria-pressed')).toBe('true');
-    expect(layoutCanvas?.getAttribute('aria-label')).toContain('herringbone');
-
-    const underlayToggle = container.querySelector<HTMLInputElement>(
-      'input[type="checkbox"]'
-    );
-    expect(underlayToggle).not.toBeNull();
-    await act(async () => underlayToggle?.click());
-    expect(underlayToggle?.checked).toBe(true);
-    expect(layoutCanvas?.getAttribute('aria-label')).toContain('единое полотно');
+    expect(container.querySelector('canvas[aria-label^="3D-"]')).toBeNull();
+    expect(text).not.toContain('Весь второй этаж в 3D');
+    expect(text).not.toContain('Раскладка ламината');
+    expect(text).not.toContain('Ёлочка');
 
     await act(async () => {
       root.unmount();

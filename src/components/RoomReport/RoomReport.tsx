@@ -6,7 +6,6 @@ import { RoomLevelStats } from '../../utils/floorTarget';
 import { roomInsights } from '../../utils/roomInsights';
 import { windowPlanSide } from '../../utils/roomOrientation';
 import { Room2D } from './Room2D';
-import { Room3D } from './Room3D';
 
 interface Props {
   index: number;
@@ -69,8 +68,8 @@ export function RoomReport({
   const fillPoints = insights.fill.filter(point => point.delta > toleranceMm);
 
   const verdict = (() => {
-    if (stats.spread <= toleranceMm * 2) {
-      return 'Перепад укладывается в допуск: выравнивание не требуется.';
+    if (stats.maxGrind <= toleranceMm && stats.maxFill <= toleranceMm) {
+      return 'Отклонения укладываются в допуск: выравнивание не требуется.';
     }
 
     if (patch.base === 'screed') {
@@ -156,19 +155,6 @@ export function RoomReport({
             insights={insights}
           />
         </section>
-        <section className={styles.panel}>
-          <div className={styles.panelHead}>
-            <h4 className={styles.panelTitle}>3D — рельеф пола</h4>
-            <span className={styles.panelHint}>вращение · наведите на точку</span>
-          </div>
-          <Room3D
-            patch={patch}
-            field={field}
-            targetZ={targetZ}
-            toleranceMm={toleranceMm}
-            insights={insights}
-          />
-        </section>
       </div>
 
       <div className={styles.hotspots}>
@@ -223,7 +209,7 @@ export function RoomReport({
 
       <p className={styles.note}>
         Отсчёт от целевой плоскости {fmt(targetZ / 10, 1)} см; допуск ±{fmt(toleranceMm / 10, 1)} см.
-        Красное — бугор, синее — яма. 3D-рельеф усилен по высоте, чтобы перепад был читаемым.
+        Красное — бугор, синее — яма.
       </p>
     </article>
   );

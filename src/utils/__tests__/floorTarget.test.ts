@@ -30,9 +30,9 @@ describe('Данные реальных замеров', () => {
 
   it('количество и диапазон замеров совпадают со сводкой', () => {
     const expected: Record<string, { count: number; min: number; max: number }> = {
-      hall: { count: 132 + 110, min: 104, max: 121 },
+      hall: { count: 132 + 110, min: 110, max: 121 },
       corridor: { count: 45 + 32, min: 106, max: 114 },
-      arch: { count: 8 + 3, min: 108, max: 110 },
+      arch: { count: 8 + 4, min: 108, max: 111 },
       garden: { count: 96 + 77, min: 105, max: 116 },
       yard: { count: 88 + 70, min: 108, max: 116 },
       small: { count: 64 + 49, min: 109, max: 119 },
@@ -70,8 +70,8 @@ describe('Данные реальных замеров', () => {
 describe('Расчёт единой отметки этажа', () => {
   it('опорные значения по реальным замерам', () => {
     const reference = computeFloorReference(zoneInputs());
-    expect(reference.minZ).toBeGreaterThan(104 - 1);
-    expect(reference.minZ).toBeLessThan(104 + 1);
+    expect(reference.minZ).toBeGreaterThan(105 - 1);
+    expect(reference.minZ).toBeLessThan(105 + 1);
     expect(reference.maxZ).toBeGreaterThan(121 - 1);
     expect(reference.maxZ).toBeLessThan(121 + 1);
 
@@ -83,7 +83,7 @@ describe('Расчёт единой отметки этажа', () => {
   });
 
   it('цель по самой высокой точке — только подмазка', () => {
-    const result = computeFloorLevel(zoneInputs(), 104, 2);
+    const result = computeFloorLevel(zoneInputs(), 105, 2);
     expect(result.totals.maxGrind).toBeLessThan(1);
     expect(result.totals.maxFill).toBeGreaterThan(15);
     expect(result.totals.grindAreaM2).toBe(0);

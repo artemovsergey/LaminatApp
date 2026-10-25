@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import { FloorLeveling } from './components/FloorLeveling/FloorLeveling';
 import { FloorPlan2D } from './components/FloorPlan2D/FloorPlan2D';
-import { Floor3D } from './components/Floor3D/Floor3D';
-import { FlooringLayout } from './components/FlooringLayout/FlooringLayout';
 import { RoomReport } from './components/RoomReport/RoomReport';
 import { DEFAULT_RULE_OPTIONS } from './utils/rule';
 import { buildApartmentModel, buildFloorModel } from './utils/floorModel';
@@ -230,39 +228,13 @@ export default function App() {
             onTargetChange={setTargetZ}
           />
 
-          <section className="panel plan-only-panel">
-            <div className="panel-head">
-              <div>
-                <h2 className="panel-title">Весь второй этаж в 3D</h2>
-                <p className="section-intro">
-                  Красный — снять высокий участок, синий — заполнить низкий. Голубая сетка —
-                  целевая плоскость {fmt(targetZ / 10, 1)} см.
-                </p>
-              </div>
-              <span className="panel-tag">3D · рельеф</span>
-            </div>
-            <Floor3D
-              model={model}
-              rules={{}}
-              analyses={{}}
-              layer="deviation"
-              activeZoneId="all"
-              currentPlacement={null}
-              mode="leveling"
-              targetZ={targetZ}
-              toleranceMm={toleranceMm}
-            />
-          </section>
-
-          <FlooringLayout model={model} targetZ={targetZ} />
-
           <section className="rooms-section" aria-labelledby="rooms-title">
             <div className="section-head">
               <div>
                 <h2 id="rooms-title">Комнаты второго этажа</h2>
                 <p>
-                  Для каждой комнаты — 2D-карта отклонений, 3D-рельеф и адреса локальных
-                  бугров и ям. Цель для всех помещений этажа одна: {fmt(targetZ / 10, 1)} см.
+                  Для каждой комнаты — 2D-карта отклонений и адреса локальных бугров и ям.
+                  Цель для всех помещений этажа одна: {fmt(targetZ / 10, 1)} см.
                 </p>
               </div>
               <nav className="room-nav" aria-label="Перейти к комнате">
@@ -298,7 +270,7 @@ export default function App() {
                 <p>
                   Комната {fmt(apartmentPatch.def.actualAreaM2, 2)} м² на бетонной стяжке.
                   Здесь другой размах: {fmt(apartmentStats.spread / 10, 1)} см против
-                  0,2–1,7 см на втором этаже.
+                  0,2–1,1 см на втором этаже.
                 </p>
               </div>
               <span className="apartment-tag">не входит во второй этаж</span>
