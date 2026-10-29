@@ -1,89 +1,62 @@
 import { FloorPatch } from '../data/floorProject';
 
-/** Сторона схемы в ориентации общего плана: верх — та же сторона, что у плана. */
+/** Сторона проекции комнаты. */
 export type PlanSide = 'left' | 'right' | 'top' | 'bottom';
 
 /**
- * Ориентация поля замера относительно общего плана.
+ * Ориентация проекции комнаты.
  *
- * Поле замера всегда хранится как прямоугольник lengthM × widthM:
- * u — от первого ряда вглубь, v — вдоль первого ряда. На плане комната
- * может быть повёрнута на 90° или отражена, поэтому для схемы комнаты
- * переводим (u, v) в координаты плана (x — вправо, y — вниз).
+ * Поле замера хранится как прямоугольник lengthM × widthM:
+ * u — вдоль первого ряда, v — вглубь от окна. На отдельной проекции
+ * ряды всегда идут слева направо, а точки — снизу вверх, поэтому
+ * проекция не зависит от поворота комнаты на общем плане.
  */
 export interface RoomOrientation {
-  /** Ширина схемы в метрах (по горизонтали плана). */
+  /** Ширина проекции в метрах: вдоль рядов. */
   plotW: number;
-  /** Высота схемы в метрах (по вертикали плана). */
+  /** Высота проекции в метрах: вдоль точек. */
   plotH: number;
-  /** Ось u поля идёт по горизонтали схемы. */
-  uHorizontal: boolean;
-  /** Ось u поля направлена против горизонтали плана. */
-  flipX: boolean;
-  /** Ось v поля направлена против вертикали плана. */
-  flipY: boolean;
-  uAxis: 'x' | 'y';
-  vAxis: 'x' | 'y';
+  /** Ось поля, вдоль которой идут ряды. */
+  rowFieldAxis: 'x' | 'y';
 }
 
 export function roomOrientation(patch: FloorPatch): RoomOrientation {
-  const uAxis: 'x' | 'y' = patch.mapX.src === 'x' ? 'x' : 'y';
-  const vAxis: 'x' | 'y' = uAxis === 'x' ? 'y' : 'x';
-  // mapX/mapY описывают именно оси поля u/v, а не глобальные x/y.
-  const uSign = patch.mapX.sign;
-  const vSign = patch.mapY.sign;
-  const uHorizontal = uAxis === 'x';
-
+  const rowFieldAxis: 'x' | 'y' = patch.transposeMeasurements ? 'x' : 'y';
   return {
-    uAxis,
-    vAxis,
-    plotW: uHorizontal ? patch.lengthM : patch.widthM,
-    plotH: uHorizontal ? patch.widthM : patch.lengthM,
-    uHorizontal,
-    flipX: uHorizontal ? uSign < 0 : vSign < 0,
-    flipY: uHorizontal ? vSign < 0 : uSign < 0,
+    rowFieldAxis,
+    plotW: rowFieldAxis === 'x' ? patch.lengthM : patch.widthM,
+    plotH: rowFieldAxis === 'x' ? patch.widthM : patch.lengthM,
   };
 }
 
-/** Координаты поля замера (u, v) → координаты схемы (x, y) в ориентации плана. */
+/**
+ * Координаты поля замера (u, v) → координаты проекции (x, y).
+ * Ряд 1 и точка 1 всегда оказываются в левом нижнем углу.
+ */
 export function fieldToDisplay(
   orientation: RoomOrientation,
   u: number,
   v: number
 ): { x: number; y: number } {
-  const x = orientation.uHorizontal ? u : v;
-  const y = orientation.uHorizontal ? v : u;
-  return {
-    x: orientation.flipX ? orientation.plotW - x : x,
-    y: orientation.flipY ? orientation.plotH - y : y,
-  };
+  if (orientation.rowFieldAxis === 'x') {
+    return { x: u, y: orientation.plotH - v };
+  }
+  return { x: v, y: orientation.plotH - u };
 }
 
-/** Координаты схемы (x, y) → координаты поля замера (u, v). */
+/** Координаты проекции (x, y) → координаты поля замера (u, v). */
 export function displayToField(
   orientation: RoomOrientation,
   x: number,
   y: number
 ): { u: number; v: number } {
-  const fx = orientation.flipX ? orientation.plotW - x : x;
-  const fy = orientation.flipY ? orientation.plotH - y : y;
-  return orientation.uHorizontal ? { u: fx, v: fy } : { u: fy, v: fx };
+  if (orientation.rowFieldAxis === 'x') {
+    return { u: x, v: orientation.plotH - y };
+  }
+  return { u: orientation.plotH - y, v: x };
 }
 
-/** Какая ось схемы соответствует оси поля. */
-export function fieldAxisOnDisplay(
-  orientation: RoomOrientation,
-  axis: 'x' | 'y'
-): 'x' | 'y' {
-  if (axis === 'x') return orientation.uHorizontal ? 'x' : 'y';
-  return orientation.uHorizontal ? 'y' : 'x';
-}
-
-/** Сторона окна на схеме по глобальной стороне света. */
+/** Сторона окна на проекции комнаты: окно всегда слева. */
 export function windowPlanSide(patch: FloorPatch): PlanSide | null {
-  if (patch.window === 'west') return 'left';
-  if (patch.window === 'east') return 'right';
-  if (patch.window === 'north') return 'top';
-  if (patch.window === 'south') return 'bottom';
-  return null;
+  return patch.window ? 'left' : null;
 }

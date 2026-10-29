@@ -1,5 +1,5 @@
 import { FloorPatch } from '../data/floorProject';
-import { fieldAxisOnDisplay, fieldToDisplay, roomOrientation, RoomOrientation } from './roomOrientation';
+import { fieldToDisplay, roomOrientation, RoomOrientation } from './roomOrientation';
 
 export interface RoomPoint {
   row: number;
@@ -12,7 +12,7 @@ export interface RoomPoint {
   /** Локальные координаты точки в поле комнаты, м. */
   x: number;
   y: number;
-  /** Координаты на схеме в ориентации общего плана, м. */
+  /** Координаты на проекции комнаты, м. */
   planX: number;
   planY: number;
   /** Короткая привязка к сетке замеров. */
@@ -111,7 +111,7 @@ export function roomMeasurementPoints(patch: FloorPatch, targetZ: number): RoomP
   return collectPoints(patch, targetZ).map(({ evenI: _evenI, evenJ: _evenJ, ...point }) => point);
 }
 
-/** Какая ось схемы (в ориентации плана) соответствует рядам, а какая — точкам. */
+/** Какая ось проекции соответствует рядам, а какая — точкам. */
 export function roomAxisInfo(patch: FloorPatch): {
   rowAxis: 'x' | 'y';
   pointAxis: 'x' | 'y';
@@ -119,11 +119,9 @@ export function roomAxisInfo(patch: FloorPatch): {
   points: number;
 } {
   const ext = sourceExtent(patch);
-  const rowFieldAxis: 'x' | 'y' = patch.transposeMeasurements ? 'x' : 'y';
-  const rowAxis = fieldAxisOnDisplay(roomOrientation(patch), rowFieldAxis);
   return {
-    rowAxis,
-    pointAxis: rowAxis === 'x' ? 'y' : 'x',
+    rowAxis: 'x',
+    pointAxis: 'y',
     ...ext,
   };
 }

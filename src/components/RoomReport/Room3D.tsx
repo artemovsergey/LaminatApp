@@ -111,7 +111,7 @@ function drawRoom3D(
 
   const worldY = (delta: number): number => -(delta / 1000) * verticalScale;
 
-  // Плоскость-цель: сетка 50 см в ориентации плана.
+  // Плоскость-цель: сетка 50 см на проекции комнаты.
   ctx.lineWidth = 1;
   ctx.strokeStyle = 'rgba(125, 211, 252, 0.18)';
   for (let x = 0; x <= L + 0.001; x += 0.5) {
@@ -224,7 +224,7 @@ function drawRoom3D(
     ctx.stroke();
   }
 
-  // Стенка окна — главный ориентир: она на той же стороне, что и на плане.
+  // Стенка окна — главный ориентир: на проекции она всегда слева.
   const windowSide = windowPlanSide(patch);
   if (windowSide) {
     const wallH = Math.min(0.95, maxDim * 0.2);
@@ -360,7 +360,7 @@ function drawRoom3D(
   ctx.font = '600 10px "Segoe UI", system-ui, sans-serif';
   ctx.fillText(`РЕЛЬЕФ · ×${verticalScale.toFixed(0)} ПО ВЫСОТЕ`, 22, 18);
   ctx.fillStyle = 'rgba(94, 234, 212, 0.82)';
-  ctx.fillText('ОРИЕНТАЦИЯ КАК НА ПЛАНЕ', 22, 34);
+  ctx.fillText('ОКНО СЛЕВА · РЯДЫ СПРАВА', 22, 34);
 
   return projected;
 }
@@ -455,7 +455,7 @@ export function Room3D(props: Props): React.JSX.Element {
           ref={ref}
           className={`${styles.canvas} ${styles.canvas3d}`}
           role="img"
-          aria-label={`3D-модель комнаты ${props.patch.name}, ориентация как на общем плане, цель ${(props.targetZ / 10).toFixed(1).replace('.', ',')} см`}
+          aria-label={`3D-модель комнаты ${props.patch.name}, ряды слева направо, точки снизу вверх${props.patch.window ? ', окно слева' : ''}, цель ${(props.targetZ / 10).toFixed(1).replace('.', ',')} см`}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}

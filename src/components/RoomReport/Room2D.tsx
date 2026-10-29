@@ -4,6 +4,7 @@ import { FloorPatch } from '../../data/floorProject';
 import { SurfaceField } from '../../types';
 import { RoomInsights, RoomPoint, roomAxisInfo, roomMeasurementPoints } from '../../utils/roomInsights';
 import { cssRgb, deltaRgb } from '../../utils/deltaColor';
+import { PlotGeometry, roomPlotGeometry } from '../../utils/roomPlotGeometry';
 import {
   displayToField,
   fieldToDisplay,
@@ -20,26 +21,12 @@ interface Props {
   insights: RoomInsights;
 }
 
-interface PlotGeometry {
-  x0: number;
-  y0: number;
-  plotW: number;
-  plotH: number;
-  width: number;
-  height: number;
-  scale: number;
-}
-
 interface HoverState {
   point: RoomPoint;
   /** Положение подсказки относительно полотна, 0…1. */
   nx: number;
   ny: number;
 }
-
-const PADDING = { left: 66, right: 46, top: 52, bottom: 74 };
-const MAX_PLOT_W = 860;
-const MAX_PLOT_H = 540;
 
 const fmtM = (v: number): string => v.toFixed(2).replace('.', ',');
 const fmtCm = (v: number): string => (v / 10).toFixed(1).replace('.', ',');
@@ -66,22 +53,6 @@ function roundedRect(
   ctx.closePath();
 }
 
-function plotGeometry(patch: FloorPatch): PlotGeometry {
-  const orientation = roomOrientation(patch);
-  const scale = Math.min(MAX_PLOT_W / orientation.plotW, MAX_PLOT_H / orientation.plotH);
-  const plotW = orientation.plotW * scale;
-  const plotH = orientation.plotH * scale;
-  return {
-    x0: PADDING.left,
-    y0: PADDING.top,
-    plotW,
-    plotH,
-    width: Math.ceil(plotW + PADDING.left + PADDING.right),
-    height: Math.ceil(plotH + PADDING.top + PADDING.bottom),
-    scale,
-  };
-}
-
 function drawRoom(
   canvas: HTMLCanvasElement,
   props: Props,
@@ -105,7 +76,7 @@ function drawRoom(
   ctx.fillStyle = '#f8fafc';
   ctx.fillRect(0, 0, width, height);
 
-  // Плотное поле высот → растровая карта отклонений в ориентации плана.
+  // Плотное поле высот → растровая карта отклонений на проекции комнаты.
   let maxAbs = 1;
   for (let j = 0; j < field.countY; j++) {
     for (let i = 0; i < field.countX; i++) {
@@ -240,40 +211,21 @@ function drawRoom(
   ctx.lineWidth = 1.6;
   ctx.strokeRect(x0, y0, plotW, plotH);
 
-  // Окно — на той же стороне, что и на общем плане.
-  const windowSide = windowPlanSide(patch);
-  if (windowSide) {
+  // Окно всегда слева: проекция развёрнута рядами от окна вправо.
+  if (windowPlanSide(patch)) {
     ctx.strokeStyle = '#0f766e';
     ctx.lineWidth = 4;
     ctx.beginPath();
-    if (windowSide === 'left' || windowSide === 'right') {
-      const wx = windowSide === 'left' ? x0 : x0 + plotW;
-      ctx.moveTo(wx, y0 + 4);
-      ctx.lineTo(wx, y0 + plotH - 4);
-    } else {
-      const wy = windowSide === 'top' ? y0 : y0 + plotH;
-      ctx.moveTo(x0 + 4, wy);
-      ctx.lineTo(x0 + plotW - 4, wy);
-    }
+    ctx.moveTo(x0, y0 + 4);
+    ctx.lineTo(x0, y0 + plotH - 4);
     ctx.stroke();
 
     const label = 'ОКНО';
     ctx.font = '700 9px "Segoe UI", system-ui, sans-serif';
     const labelW = ctx.measureText(label).width + 10;
     const labelH = 16;
-    let lx = x0 + plotW / 2 - labelW / 2;
-    let ly = y0 + 4;
-    if (windowSide === 'left') {
-      lx = x0 + 7;
-      ly = y0 + 9;
-    } else if (windowSide === 'right') {
-      lx = x0 + plotW - labelW - 7;
-      ly = y0 + 9;
-    } else if (windowSide === 'top') {
-      ly = y0 + 7;
-    } else {
-      ly = y0 + plotH - labelH - 7;
-    }
+    const lx = x0 + 7;
+    const ly = y0 + 9;
     roundedRect(ctx, lx, ly, labelW, labelH, 4);
     ctx.fillStyle = 'rgba(240, 253, 250, 0.94)';
     ctx.fill();
@@ -305,14 +257,14 @@ function drawRoom(
   ctx.fillText(`${fmtM(orientation.plotW)} м`, x0 + plotW / 2, dimY + 7);
 
   ctx.save();
-  ctx.translate(22, y0 + plotH / 2);
+  ctx.translate(Math.max(22, x0 - 44), y0 + plotH / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   ctx.fillText(`${fmtM(orientation.plotH)} м`, 0, 0);
   ctx.restore();
 
-  // Подписи осей: где ряды, где точки — уже в ориентации плана.
+  // Подписи осей: ряды идут по горизонтали, точки — по вертикали.
   const axis = roomAxisInfo(patch);
   ctx.fillStyle = '#64748b';
   ctx.font = '600 10px "Segoe UI", system-ui, sans-serif';
@@ -334,15 +286,15 @@ function drawRoom(
   ctx.fillText(leftLabel, 0, 0);
   ctx.restore();
 
-  // Целевая отметка и допуск — в углу схемы.
+  // Целевая отметка и допуск — в правом верхнем углу полотна.
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
   ctx.font = '700 11px "Segoe UI", system-ui, sans-serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText(`цель ${fmtCm(targetZ)} см`, x0 + plotW, 12);
+  ctx.fillText(`цель ${fmtCm(targetZ)} см`, width - 12, 12);
   ctx.font = '500 10px "Segoe UI", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.fillText(`допуск ±${fmtCm(toleranceMm)} см`, x0 + plotW, 27);
+  ctx.fillText(`допуск ±${fmtCm(toleranceMm)} см`, width - 12, 27);
 
   // Легенда внизу слева.
   ctx.textAlign = 'left';
@@ -367,7 +319,7 @@ function drawRoom(
 export function Room2D(props: Props): React.JSX.Element {
   const ref = useRef<HTMLCanvasElement>(null);
   const [hover, setHover] = useState<HoverState | null>(null);
-  const geometry = useMemo(() => plotGeometry(props.patch), [props.patch]);
+  const geometry = useMemo(() => roomPlotGeometry(props.patch), [props.patch]);
   const points = useMemo(
     () => roomMeasurementPoints(props.patch, props.targetZ),
     [props.patch, props.targetZ]
@@ -419,7 +371,7 @@ export function Room2D(props: Props): React.JSX.Element {
         ref={ref}
         className={styles.canvas}
         role="img"
-        aria-label={`2D-карта перепадов комнаты ${props.patch.name}, ориентация как на общем плане, цель ${(props.targetZ / 10).toFixed(1).replace('.', ',')} см`}
+        aria-label={`2D-карта перепадов комнаты ${props.patch.name}, ряды слева направо, точки снизу вверх${props.patch.window ? ', окно слева' : ''}, цель ${(props.targetZ / 10).toFixed(1).replace('.', ',')} см`}
         onPointerMove={onPointerMove}
         onClick={event => pickPoint(event.clientX, event.clientY)}
         onPointerLeave={event => {

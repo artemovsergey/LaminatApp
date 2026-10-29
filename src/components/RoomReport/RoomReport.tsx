@@ -4,7 +4,6 @@ import { FloorPatch } from '../../data/floorProject';
 import { SurfaceField } from '../../types';
 import { RoomLevelStats } from '../../utils/floorTarget';
 import { roomInsights } from '../../utils/roomInsights';
-import { windowPlanSide } from '../../utils/roomOrientation';
 import { Room2D } from './Room2D';
 
 interface Props {
@@ -22,12 +21,15 @@ const fmt = (value: number, digits = 1): string =>
 const baseLabel = (base: FloorPatch['base']): string =>
   base === 'screed' ? 'бетонная стяжка' : 'наливной пол';
 
+const WINDOW_DIRECTION: Record<NonNullable<FloorPatch['window']>, string> = {
+  west: 'запад',
+  east: 'восток',
+  north: 'север',
+  south: 'юг',
+};
+
 const windowLabel = (patch: FloorPatch): string => {
-  const side = windowPlanSide(patch);
-  if (side === 'left') return 'окно слева · запад';
-  if (side === 'right') return 'окно справа · восток';
-  if (side === 'top') return 'окно вверху · север';
-  if (side === 'bottom') return 'окно внизу · юг';
+  if (patch.window) return `окно слева · ${WINDOW_DIRECTION[patch.window]}`;
   if (patch.kind === 'corridor' || patch.kind === 'arch') return 'без окна';
   return 'окно не указано';
 };
@@ -137,7 +139,8 @@ export function RoomReport({
       </div>
 
       <p className={styles.orientationNote}>
-        Схемы ориентированы как общий план этажа: верх — север, низ — юг, лево и право совпадают с планом.
+        Схемы развёрнуты независимо от общего плана: ряды идут слева направо, точки — снизу вверх,
+        а окно, если оно есть, всегда слева.
         Наведите курсор или коснитесь точки замера, чтобы увидеть значение и координаты по схеме.
       </p>
 
